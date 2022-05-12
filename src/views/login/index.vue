@@ -7,24 +7,22 @@
       <div class="title-container">
         <h3 class="title">对党忠诚 纪律严明 赴汤蹈火 竭诚为民</h3>
       </div>
-      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="right">
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="right" label-width="140px">
         <div class="formTopText">
-          <el-image style="width:50px;" :src="require('@/assets/img/logo.jpeg')" fit="fill" />
+          <el-image style="width:60px;margin-right:5px;" :src="require('@/assets/img/logo.jpeg')" fit="fill" />
           <div>消防执法营商环境监督系统</div>
         </div>
-        <el-divider />
-        <el-form-item prop="username" label="用户名" label-width="100px">
-          <el-input ref="username" v-model="loginForm.username" size="small" style="width:215px" placeholder="Username" name="username" type="text" tabindex="1" auto-complete="on" />
+        <el-divider class="loginDivider" />
+        <el-form-item prop="username" label="用户名">
+          <el-input ref="username" v-model="loginForm.username" placeholder="输入用户名" name="username" tabindex="1" auto-complete="on" />
         </el-form-item>
 
-        <el-form-item prop="password" label="密码" label-width="100px">
-          <el-input :key="passwordType" ref="password" v-model="loginForm.password" style="width:215px" size="small" :type="passwordType" placeholder="Password" name="password" tabindex="2" auto-complete="on" @keyup.enter.native="handleLogin" />
-          <!-- <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span> -->
+        <el-form-item prop="password" label="密码">
+          <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="输入密码" name="password" tabindex="2" auto-complete="on" @keyup.enter.native="handleLogin" />
         </el-form-item>
-
-        <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+        <el-form-item label-width="120px">
+          <el-button :loading="loading" type="danger" size="small" @click.native.prevent="handleLogin">登 入</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -38,22 +36,22 @@ export default {
   data () {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入密码'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不能少于六位'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: false, trigger: 'blur', validator: validateUsername }],
@@ -122,23 +120,15 @@ $cursor: #fff;
   .el-input {
     // display: inline-block;
     // height: 47px;
-    // width: 85%;
-
-    input {
-      // background: transparent;
-      // border: 0px;
-      // -webkit-appearance: none;
-      // border-radius: 0px;
-      // padding: 12px 5px 12px 15px;
-      // color: $light_gray;
-      // height: 47px;
-      // caret-color: $cursor;
-
-      // &:-webkit-autofill {
-      //   box-shadow: 0 0 0px 1000px $bg inset !important;
-      //   -webkit-text-fill-color: $cursor !important;
-      // }
-    }
+    width: 250px;
+    border-radius: 0px;
+    color: $light_gray;
+  }
+  .el-button {
+    width: 250px;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    border-radius: 0px;
   }
 
   .el-form-item {
@@ -146,6 +136,13 @@ $cursor: #fff;
     // background: rgba(0, 0, 0, 0.1);
     // border-radius: 5px;
     // color: #454545;
+    margin: 20px;
+    .el-form-item__label {
+      padding-right: 30px;
+    }
+  }
+  .loginDivider {
+    margin: 16px 0 30px;
   }
 }
 </style>
@@ -153,84 +150,61 @@ $cursor: #fff;
 <style lang="scss" scoped>
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
-$light_gray: #e5891e;
+$light_gray: #b8860b;
 
 .login-container {
-  // min-height: 100%;
-  // width: 100%;
-  // // background-color: $bg;
-  // overflow: hidden;
   position: relative;
   width: 100%;
   height: 100vh;
   background-size: cover;
-  /* padding: 1px; */
   box-sizing: border-box;
   z-index: 1;
 
   .login-form {
-    width: 520px;
+    width: 600px;
     z-index: 1001;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     z-index: 1001;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 1);
   }
 
-  .svg-container {
-    padding: 6px 5px 6px 15px;
-    color: $dark_gray;
-    vertical-align: middle;
-    width: 30px;
-    display: inline-block;
-  }
-
+  // 对党忠诚 纪律严明 赴汤蹈火 竭诚为民
   .title-container {
-    // position: relative;
     z-index: 1001;
     margin-top: 20px;
-
     .title {
-      font-size: 26px;
+      font-size: 24px;
       color: $light_gray;
-      margin: 0px auto 40px auto;
+      margin: 0px auto 30px auto;
       text-align: center;
-      font-weight: bold;
+      font-weight: 900;
+      letter-spacing: 2px;
     }
   }
-
-  .show-pwd {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    font-size: 16px;
-    color: $dark_gray;
-    cursor: pointer;
-    user-select: none;
-  }
 }
+// 居中的大框
 .loginFormOther {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 10%;
+  padding-top: 5%;
 }
+// 背景
 .loginBackground {
   position: absolute;
   z-index: 1;
   width: 100%;
   height: 100vh;
 }
+// 新时代新征程
 .textLogin {
-  // position: absolute;
   z-index: 1001;
-  // top: 20%;
-  // transform: translate(-50%, -50%);
-  // left: 50%;
-  width: 600px;
+  width: 750px;
 }
+// 表单顶上的文字
 .formTopText {
   width: 100%;
   font-size: 24px;
@@ -239,6 +213,6 @@ $light_gray: #e5891e;
   align-items: center;
   justify-content: center;
   font-family: Source-Han-Serif-CN-Bold;
-  color: #dc2418;
+  color: #931621;
 }
 </style>
