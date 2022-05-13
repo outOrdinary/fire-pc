@@ -1,16 +1,16 @@
 <template>
   <div class="login-container">
-    <el-image class="loginBackground" :src="require('@/assets/img/login.png')" fit="fill" />
+    <!-- <el-image class="loginBackground" :src="require('@/assets/img/login.png')" fit="fill" /> -->
     <div class="loginFormOther">
-      <el-image class="textLogin" :src="require('@/assets/img/newR.png')" fit="fill" />
+      <!-- <el-image class="textLogin" :src="require('@/assets/img/newR.png')" fit="fill" /> -->
 
       <div class="title-container">
-        <h3 class="title">对党忠诚 纪律严明 赴汤蹈火 竭诚为民</h3>
+        <!-- <h3 class="title">对党忠诚 纪律严明 赴汤蹈火 竭诚为民</h3> -->
       </div>
-      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="right" label-width="140px">
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="right" label-width="120px">
         <div class="formTopText">
-          <el-image style="width:60px;margin-right:5px;" :src="require('@/assets/img/logo.jpeg')" fit="fill" />
-          <div>消防执法营商环境监督系统</div>
+          <!-- <el-image style="width:60px;margin-right:5px;" :src="require('@/assets/img/logo.jpeg')" fit="fill" /> -->
+          <!-- <div>消防执法营商环境监督系统</div> -->
         </div>
         <el-divider class="loginDivider" />
         <el-form-item prop="username" label="用户名">
@@ -20,7 +20,10 @@
         <el-form-item prop="password" label="密码">
           <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="输入密码" name="password" tabindex="2" auto-complete="on" @keyup.enter.native="handleLogin" />
         </el-form-item>
-        <el-form-item label-width="120px">
+        <el-form-item label="验证码">
+          <drag-verify ref="dragVerify" :width="300" radius="0" :is-passing.sync="isPassing" text="请向右滑块拖动" success-text="验证通过" handler-icon="el-icon-d-arrow-right" success-icon="el-icon-circle-check" />
+        </el-form-item>
+        <el-form-item label-width="100px">
           <el-button :loading="loading" type="danger" size="small" @click.native.prevent="handleLogin">登 入</el-button>
         </el-form-item>
       </el-form>
@@ -30,9 +33,13 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import dragVerify from 'vue-drag-verify2'
 
 export default {
   name: 'Login',
+  components: {
+    dragVerify
+  },
   data () {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -49,6 +56,7 @@ export default {
       }
     }
     return {
+      msg: '',
       loginForm: {
         username: '',
         password: ''
@@ -58,6 +66,7 @@ export default {
         password: [{ required: false, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
+      isPassing: false,
       passwordType: 'password',
       redirect: undefined
     }
@@ -96,6 +105,17 @@ export default {
           return false
         }
       })
+    },
+    // passcallback () {
+    //   console.log(this.isPassing)
+    //   this.$message({
+    //     message: '验证通过',
+    //     type: 'success'
+    //   })
+    // },
+    reset () {
+      this.isPassing = false
+      this.$refs.dragVerify.reset()
     }
   }
 }
@@ -120,12 +140,15 @@ $cursor: #fff;
   .el-input {
     // display: inline-block;
     // height: 47px;
-    width: 250px;
+    width: 300px;
     border-radius: 0px;
     color: $light_gray;
+    .el-input__inner {
+      border-radius: 0px;
+    }
   }
   .el-button {
-    width: 250px;
+    width: 300px;
     margin-bottom: 30px;
     margin-left: 20px;
     border-radius: 0px;
@@ -144,6 +167,13 @@ $cursor: #fff;
   .loginDivider {
     margin: 16px 0 30px;
   }
+}
+
+.verifybox {
+  display: flex;
+}
+.dv_handler {
+  border: 1px solid rgba(238, 238, 238, 1) !important;
 }
 </style>
 
