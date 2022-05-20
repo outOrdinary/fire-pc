@@ -8,7 +8,7 @@
       <div class="navbarText">消防执法营商环境监督系统</div>
     </div>
     <div class="right-menu">
-      <el-image :src="require('@/assets/img/newW.png')" style="height:60px;margin:25px;" fit="fill" />
+      <el-image :src="require('@/assets/img/newW.png')" style="width:300px;height:60px;margin:25px;" fit="cover" />
     </div>
   </div>
 </template>

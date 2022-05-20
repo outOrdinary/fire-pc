@@ -63,3 +63,9 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+div,
+span,
+p {
+  caret-color: transparent;
+}

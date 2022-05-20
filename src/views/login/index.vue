@@ -1,16 +1,16 @@
 <template>
   <div class="login-container">
-    <!-- <el-image class="loginBackground" :src="require('@/assets/img/login.png')" fit="fill" /> -->
+    <el-image class="loginBackground" :src="require('@/assets/img/login.png')" fit="fill" />
     <div class="loginFormOther">
-      <!-- <el-image class="textLogin" :src="require('@/assets/img/newR.png')" fit="fill" /> -->
+      <el-image class="textLogin" :src="require('@/assets/img/newR.png')" fit="fill" />
 
       <div class="title-container">
-        <!-- <h3 class="title">对党忠诚 纪律严明 赴汤蹈火 竭诚为民</h3> -->
+        <h3 class="title">对党忠诚 纪律严明 赴汤蹈火 竭诚为民</h3>
       </div>
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="right" label-width="120px">
         <div class="formTopText">
-          <!-- <el-image style="width:60px;margin-right:5px;" :src="require('@/assets/img/logo.jpeg')" fit="fill" /> -->
-          <!-- <div>消防执法营商环境监督系统</div> -->
+          <el-image style="width:60px;margin-right:5px;" :src="require('@/assets/img/logo.jpeg')" fit="fill" />
+          <div>消防执法营商环境监督系统</div>
         </div>
         <el-divider class="loginDivider" />
         <el-form-item prop="username" label="用户名">
@@ -24,8 +24,11 @@
           <drag-verify ref="dragVerify" :width="300" radius="0" :is-passing.sync="isPassing" text="请向右滑块拖动" success-text="验证通过" handler-icon="el-icon-d-arrow-right" success-icon="el-icon-circle-check" />
         </el-form-item>
         <el-form-item label-width="100px">
-          <el-button :loading="loading" type="danger" size="small" @click.native.prevent="handleLogin">登 入</el-button>
+          <el-button :loading="loading" type="danger" size="small" style="text-indent:20px;letter-spacing:20px;font-size:16px;" @click.native.prevent="handleLogin">登入</el-button>
         </el-form-item>
+        <div class="forget-password">
+          <el-link :underline="false">忘记密码？</el-link>
+        </div>
       </el-form>
     </div>
   </div>
@@ -58,8 +61,8 @@ export default {
     return {
       msg: '',
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '123456'
       },
       loginRules: {
         username: [{ required: false, trigger: 'blur', validator: validateUsername }],
@@ -91,20 +94,27 @@ export default {
       })
     },
     handleLogin () {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      if (this.isPassing) {
+        this.$refs.loginForm.validate(valid => {
+          if (valid) {
+            this.loading = true
+            this.$store.dispatch('user/login', this.loginForm).then(() => {
+              this.$router.push({ path: this.redirect || '/' })
+              this.loading = false
+            }).catch(() => {
+              this.loading = false
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      } else {
+        this.$message({
+          message: '未验证',
+          type: 'error'
+        })
+      }
     },
     // passcallback () {
     //   console.log(this.isPassing)
@@ -191,6 +201,7 @@ $light_gray: #b8860b;
   z-index: 1;
 
   .login-form {
+    position: relative;
     width: 600px;
     z-index: 1001;
     padding: 20px 30px;
@@ -225,7 +236,7 @@ $light_gray: #b8860b;
 // 背景
 .loginBackground {
   position: absolute;
-  z-index: 1;
+  z-index: -1;
   width: 100%;
   height: 100vh;
 }
@@ -244,5 +255,12 @@ $light_gray: #b8860b;
   justify-content: center;
   font-family: Source-Han-Serif-CN-Bold;
   color: #931621;
+}
+.forget-password {
+  position: absolute;
+  bottom: 7%;
+  left: 10%;
+  z-index: 1002;
+  font-size: 12px;
 }
 </style>

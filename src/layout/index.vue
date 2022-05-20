@@ -1,10 +1,12 @@
 <template>
   <div class="app-wrapper">
+    <el-image class="loginBackground" :src="require('@/assets/img/back.png')" fit="fill" />
     <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
     <!-- <sidebar class="sidebar-container" /> -->
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
+        <navbar-down />
       </div>
       <app-main />
     </div>
@@ -12,14 +14,15 @@
 </template>
 
 <script>
-import { Navbar, AppMain } from './components'
+import { Navbar, AppMain, NavbarDown } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
   name: 'Layout',
   components: {
     Navbar,
-    AppMain
+    AppMain,
+    NavbarDown
   },
   mixins: [ResizeMixin],
   computed: {
@@ -88,5 +91,11 @@ export default {
 
 .mobile .fixed-header {
   width: 100%;
+}
+.loginBackground {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
 }
 </style>
