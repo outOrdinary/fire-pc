@@ -89,7 +89,24 @@ export default {
   data () {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+      tableData: [
+        {
+          company: '', // 执法单位
+          personnel: '', // 执法人员
+          time: '', // 执法时间
+          coverCompany: '', // 被执法单位
+          name: '', // 联系人
+          phone: '', // 联系电话
+          context: '', // 执法内容
+          evaluate: '', // 总体评价
+          evaluateTime: '', // 评价时间
+          radio: [], // 存在问题
+          text: '', // 反映的其他问题
+          disposal: '', // 处置情况
+          result: '' // 反馈结果
+        }
+      ]
     }
   },
   created () {
